@@ -1,0 +1,2 @@
+event_id,earnings_date,ticker,target_up,abnormal_return_5d,stock_return_5d,pred_proba_up,pred_label,model_name,trade,strategy_return,cumulative_return
+MSFT_2026_Q1,2025-10-29,MSFT,0,-0.0320677185834468,-0.0353773694423947,0.0403680990209247,0,LightGBM,False,0.0,0.0

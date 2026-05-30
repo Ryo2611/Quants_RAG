@@ -1,0 +1,3 @@
+event_id,earnings_date,ticker,target_up,abnormal_return_5d,stock_return_5d,pred_proba_up,pred_label,model_name
+MSFT_2026_Q1,2025-10-29,MSFT,0,-0.0320677185834468,-0.0353773694423947,0.2541841805848855,0,Logistic Regression
+MSFT_2026_Q1,2025-10-29,MSFT,0,-0.0320677185834468,-0.0353773694423947,0.04036809902092471,0,LightGBM
