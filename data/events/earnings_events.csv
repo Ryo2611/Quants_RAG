@@ -1,0 +1,4 @@
+event_id,ticker,company_name,fiscal_year,quarter,document_type,doc_id,earnings_date,filing_date
+MSFT_2025_Q2,MSFT,Microsoft,2025,Q2,10Q,MSFT_2025_Q2_10Q,2025-01-29,2025-01-29
+MSFT_2025_Q3,MSFT,Microsoft,2025,Q3,10Q,MSFT_2025_Q3_10Q,2025-04-30,2025-04-30
+MSFT_2026_Q1,MSFT,Microsoft,2026,Q1,10Q,MSFT_2026_Q1_10Q,2025-10-29,2025-10-29

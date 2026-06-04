@@ -1,0 +1,21 @@
+pymupdf
+pandas
+streamlit
+chromadb
+ollama
+python-dotenv
+pydantic
+tqdm
+numpy
+yfinance
+scikit-learn
+lightgbm
+matplotlib
+plotly
+joblib
+scipy
+statsmodels
+pytest
+
+# Optional: enables higher-quality local embeddings when EMBEDDING_BACKEND=sentence-transformers.
+# sentence-transformers

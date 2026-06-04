@@ -8,7 +8,6 @@ from typing import Any
 
 import chromadb
 from chromadb import Documents, EmbeddingFunction, Embeddings
-from sentence_transformers import SentenceTransformer
 from tqdm import tqdm
 
 from src.chunking import load_chunks_from_jsonl
@@ -23,12 +22,19 @@ from src.config import (
 )
 from src.schemas import ChunkDocument
 
+try:
+    from sentence_transformers import SentenceTransformer
+except Exception:
+    SentenceTransformer = None
+
 _warned_embedding_fallback = False
-_st_model_cache: SentenceTransformer | None = None
+_st_model_cache: Any | None = None
 
 
-def _get_sentence_transformer(model_name: str) -> SentenceTransformer:
+def _get_sentence_transformer(model_name: str) -> Any:
     global _st_model_cache
+    if SentenceTransformer is None:
+        raise RuntimeError("sentence-transformers is not installed")
     if _st_model_cache is None:
         _st_model_cache = SentenceTransformer(model_name)
     return _st_model_cache

@@ -1,7 +1,8 @@
-# Quants_RAG
 # Earnings RAG Quant Dashboard
 
-This project builds a RAG-based financial document analysis system that extracts structured signals from earnings reports and prepares them for post-earnings return prediction.
+This project builds a RAG-based financial document analysis system that turns earnings filings into structured signals and connects them to post-earnings stock reaction prediction.
+
+It is designed as a portfolio project for quant/data roles: the emphasis is not on claiming predictive performance from a tiny sample, but on showing a clean end-to-end pipeline from unstructured filings to model-ready features and a simple event-driven backtest.
 
 ## Scope
 
@@ -54,8 +55,9 @@ earnings-rag-quant-dashboard/
 ├── tests/
 ├── .env.example
 ├── .gitignore
+├── requirements.txt
 ├── README.md
-└── requirements.txt
+└── LICENSE
 ```
 
 ## Setup
@@ -104,6 +106,25 @@ Example:
 MSFT_2024_Q1_10Q.pdf
 ```
 
+PDFs, extracted text, vector databases, price data, model files, and backtest artifacts are intentionally ignored by Git. They can be regenerated locally and should not be committed.
+
+## Event Metadata
+
+The repository includes a small sample event file:
+
+```text
+data/events/earnings_events.csv
+```
+
+Each `doc_id` must match the PDF filename without `.pdf`.
+
+Example:
+
+```text
+PDF:    MSFT_2025_Q2_10Q.pdf
+doc_id: MSFT_2025_Q2_10Q
+```
+
 ## Run The RAG Pipeline
 
 ```bash
@@ -111,6 +132,12 @@ python -m src.pdf_loader
 python -m src.chunking
 python -m src.vector_store
 streamlit run app/streamlit_app.py
+```
+
+Equivalent staged command:
+
+```bash
+python -m src.run_pipeline --stage rag
 ```
 
 This project runs entirely locally with no paid API keys. By default, embeddings use a deterministic local hash backend so the project runs without downloading a Hugging Face model. LLM answers are generated with Ollama. PDF extraction and chunking have no additional dependencies.
@@ -147,6 +174,19 @@ python -m src.backtest
 streamlit run app/streamlit_app.py
 ```
 
+Equivalent staged commands:
+
+```bash
+python -m src.run_pipeline --stage features
+python -m src.run_pipeline --stage models
+```
+
+To run everything from PDF extraction through backtesting:
+
+```bash
+python -m src.run_pipeline --stage all
+```
+
 Generated Phase 2 artifacts:
 
 - `data/prices/MSFT.csv`
@@ -166,6 +206,12 @@ Generated Phase 2 artifacts:
 - `Feature Dataset`
 - `Prediction`
 - `Backtest`
+
+Launch the app:
+
+```bash
+streamlit run app/streamlit_app.py
+```
 
 ## Fixed MVP Questions
 
@@ -188,6 +234,28 @@ The current sample size is too small to draw statistically reliable conclusions.
 The next step is to expand the dataset to multiple companies and multiple fiscal years.
 
 The implementation avoids look-ahead bias by using only earnings document text and pre-event price features as model inputs. Post-event returns are used only as targets and for backtest evaluation.
+
+## Tests
+
+```bash
+python -m pytest tests
+```
+
+The tests cover filename parsing, chunking, event validation, target construction, and the simple event backtest.
+
+## Repository Hygiene
+
+The following files are ignored because they are local artifacts or secrets:
+
+- `.env`
+- raw PDFs
+- extracted JSONL files
+- Chroma vector stores
+- downloaded prices
+- generated features and predictions
+- trained model files
+
+If `.env` is ever accidentally pushed, rotate the exposed keys and remove the file from Git history before treating the repository as public.
 
 ## Future Work
 
